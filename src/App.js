@@ -11,11 +11,28 @@ class App extends Component {
       { name: 'Max', age: 28 },
       { name: 'Manu', age: 29 },
       { name: 'Stephanie', age: 26 }
-    ]
+    ],
+    otherState: 'some other value'
   }
 
+  // only use the ES 6 arrow function would make the 'this' pointed to the 'class App' property
   switchNameHandler = () => {
-
+    // Don't do this this.state.persons[0].name='Maximilian';
+    // we shouldn't mutate which means chane the state directly like this,
+    // React will not recognize that and will not pick up the change
+    
+    // Instead use a special method React gives you, you also access this with 'this' and then it's setState
+    // setState allows us to update this special state property here and it will then ensure that React gets to 
+    // know about this update and updates the DOM
+    // setState takes an object as an argument and it'll merge whatever we define here with our existing state.
+    // it'll not discard otherState and leave it as untouched
+    this.setState({
+      persons: [
+        { name: 'MaxIMILIAN', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 27 }
+      ]
+    });
   }
 
   render() {
