@@ -3,6 +3,7 @@ import React from 'react';
 // a component is just a function which returns some jsx, some html
 // props means the attributes on your component which is set and passed from outside, e.g: <Person name="Max" age="28" />
 // props.children refers to any elements that's between the opening and closing tag of our component
+// props change will trigger React to re-render components and potentially update the DOM in browser
 const person = (props) => {
 return (
 <div>
