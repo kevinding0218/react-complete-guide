@@ -3,6 +3,16 @@ import './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
+  // notes: this state property here is only available in class-based React component which 'extends Component'
+  // In React 16.8, you can manage state in functional components.
+  // if state changes, it'll lead React to re-render our DOM or to update the DOM
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 26 }
+    ]
+  }
   render() {
     // it does look like html but it is NOT
     // all the 'div'/'h1' are not html element but managed or provided by the react
@@ -15,9 +25,10 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <Person name="Max" age="28" />
-        <Person name="Manu" age="29">My Hobbies: Racing</Person>
-        <Person name="Stephanie" age="26" />
+        <button>Switch Name</button>
+        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>My Hobbies: Racing</Person>
+        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
       </div>
     );
 
