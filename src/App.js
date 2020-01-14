@@ -13,6 +13,11 @@ class App extends Component {
       { name: 'Stephanie', age: 26 }
     ]
   }
+
+  switchNameHandler = () => {
+
+  }
+
   render() {
     // it does look like html but it is NOT
     // all the 'div'/'h1' are not html element but managed or provided by the react
@@ -21,11 +26,14 @@ class App extends Component {
     // it is a typical thing and typical best practice to wrap everything into one root element per component
     // also makes sense since you typically want to style your components and want to add css class
     // which is responsible for styling to the root element as <div>.
+
+    // if you have parentheses in onClick handler, this will execute immediately once react renders to the DOM because you execute the function with parenthesis
+    // we only want to pass a reference and we do this by using 'this' and then referring to that property which holds the function
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <button>Switch Name</button>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
         <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
         <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>My Hobbies: Racing</Person>
         <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
