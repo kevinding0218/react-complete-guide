@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   // only use the ES 6 arrow function would make the 'this' pointed to the 'class App' property
-  switchNameHandler = () => {
+  switchNameHandler = (newName) => {
     // Don't do this this.state.persons[0].name='Maximilian';
     // we shouldn't mutate which means chane the state directly like this,
     // React will not recognize that and will not pick up the change
@@ -32,7 +32,7 @@ class App extends Component {
     // it'll not discard otherState and leave it as untouched
     this.setState({
       persons: [
-        { name: 'MaxIMILIAN', age: 28 },
+        { name: newName, age: 28 },
         { name: 'Manu', age: 29 },
         { name: 'Stephanie', age: 27 }
       ]
@@ -50,13 +50,22 @@ class App extends Component {
 
     // if you have parentheses in onClick handler, this will execute immediately once react renders to the DOM because you execute the function with parenthesis
     // we only want to pass a reference and we do this by using 'this' and then referring to that property which holds the function
+
+    // click={this.switchNameHandler} - pass methods also as props so that you can call a method which might change the state in another component
+    // which doesn't have direct access to the state and whcih shouldn't have direct access to the state
+    
+    // this.switchNameHandler.bind(this, 'Jialu') - (recommend)the 'this' controls refers to the class component 
+
+    // onClick={() => this.switchNameHandler()} - (not recommend) pass here is an anonymous function which will be executed on a click
+    // and which then returns the result of this function getting executed
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <button onClick={this.switchNameHandler}>Switch Name</button>
+        <button onClick={() => this.switchNameHandler('Kevin')}>Switch Name</button>
         <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>My Hobbies: Racing</Person>
+        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}
+        click={this.switchNameHandler.bind(this, 'Jialu')}>My Hobbies: Racing</Person>
         <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
       </div>
     );
