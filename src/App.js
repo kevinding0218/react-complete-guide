@@ -39,6 +39,17 @@ class App extends Component {
     });
   }
 
+  // event.target - should be the input into which we typed
+  nameChangedHandler = (event) => {
+    this.setState({
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: event.target.value, age: 29 },
+        { name: 'Stephanie', age: 26 }
+      ]
+    });
+  }
+
   render() {
     // it does look like html but it is NOT
     // all the 'div'/'h1' are not html element but managed or provided by the react
@@ -65,7 +76,8 @@ class App extends Component {
         <button onClick={() => this.switchNameHandler('Kevin')}>Switch Name</button>
         <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
         <Person name={this.state.persons[1].name} age={this.state.persons[1].age}
-        click={this.switchNameHandler.bind(this, 'Jialu')}>My Hobbies: Racing</Person>
+        click={this.switchNameHandler.bind(this, 'Jialu')}
+        changed={this.nameChangedHandler}>My Hobbies: Racing</Person>
         <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
       </div>
     );
