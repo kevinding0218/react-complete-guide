@@ -69,11 +69,21 @@ class App extends Component {
 
     // onClick={() => this.switchNameHandler()} - (not recommend) pass here is an anonymous function which will be executed on a click
     // and which then returns the result of this function getting executed
+
+    // not a class property but a normal variable constant of this render method
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
+    };
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <button onClick={() => this.switchNameHandler('Kevin')}>Switch Name</button>
+        <button style={style} onClick={() => this.switchNameHandler('Kevin')}>Switch Name</button>
         <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
         <Person name={this.state.persons[1].name} age={this.state.persons[1].age}
         click={this.switchNameHandler.bind(this, 'Jialu')}
