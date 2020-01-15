@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
+// Stateful/smart components - either class-based with state or functional with useState
+// Having as many pure functional presentation components as possible and only use state
+// no matter how in a few selected components, this would make your app easy to manage and maintain
+// It's very clear where your main logic sits and where your data changes and then is distributed to the rest of your app
 class App extends Component {
   // notes: this state property here is only available in class-based React component which 'extends Component'
   // In React 16.8, you can manage state in functional components.
