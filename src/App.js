@@ -51,8 +51,13 @@ class App extends Component {
     });
   };
 
+  // slice - copys the full array and returns a new one which is then stored here
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    //const persons = this.state.persons.slice();
+    // es6 new feature
+    // You should always update state in an immutable fashion, so without mutating the original state first
+    // Create a copy, change that and then update the state with said state
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
   };
