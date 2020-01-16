@@ -41,14 +41,26 @@ class App extends Component {
   };
 
   // event.target - should be the input into which we typed
-  nameChangedHandler = event => {
-    this.setState({
-      persons: [
-        { name: "Max", age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: "Stephanie", age: 26 }
-      ]
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
     });
+
+    // javascript object is reference type, we should mutate it by using {...oldObject}
+    const person = { 
+      ...this.state.persons[personIndex]
+    };
+
+    // alternative way by using Object.assign
+    // const person = Object.assign({}, this.state.persons[personIndex]);
+
+    // not update the original object now
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({ persons: persons });
   };
 
   // in javascript, objects and arrays are reference types, so when get persons from my state here
@@ -110,7 +122,12 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person click={() => this.deletePersonHandler(index)} name={person.name} age={person.age} key={person.id} />;
+            return <Person 
+              click={() => this.deletePersonHandler(index)} 
+              name={person.name} 
+              age={person.age} 
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />;
           })}
         </div>
       );
