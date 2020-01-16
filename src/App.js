@@ -53,10 +53,19 @@ class App extends Component {
 
   togglePesonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({showPersons: !doesShow});
-  }
+    this.setState({ showPersons: !doesShow });
+  };
 
   render() {
+    // not a class property but a normal variable constant of this render method
+    const style = {
+      backgroundColor: "white",
+      font: "inherit",
+      border: "1px solid blue",
+      padding: "8px",
+      cursor: "pointer"
+    };
+
     // it does look like html but it is NOT
     // all the 'div'/'h1' are not html element but managed or provided by the react
     // note here the className attribute was defined in JSX but will later on be translated to class in HTML
@@ -76,16 +85,32 @@ class App extends Component {
     // onClick={() => this.switchNameHandler()} - (not recommend) pass here is an anonymous function which will be executed on a click
     // and which then returns the result of this function getting executed
 
-    // not a class property but a normal variable constant of this render method
-    
     // to show/hide a html element, use 'if' javascript statement in jsx as {}, return html element or null/(hide)
-    const style = {
-      backgroundColor: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer"
-    };
+    // alternative javascript way, assign the jsx to variable we conditionally assign
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+          />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            click={this.switchNameHandler.bind(this, "Jialu")}
+            changed={this.nameChangedHandler}
+          >
+            My Hobbies: Racing
+          </Person>
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}
+          />
+        </div>
+      );
+    }
 
     return (
       <div className="App">
@@ -94,27 +119,7 @@ class App extends Component {
         <button style={style} onClick={() => this.togglePesonsHandler}>
           Toggle Persons
         </button>
-        { 
-          this.state.showPersons ? 
-          <div >
-            <Person
-              name={this.state.persons[0].name}
-              age={this.state.persons[0].age}
-            />
-            <Person
-              name={this.state.persons[1].name}
-              age={this.state.persons[1].age}
-              click={this.switchNameHandler.bind(this, "Jialu")}
-              changed={this.nameChangedHandler}
-            >
-              My Hobbies: Racing
-            </Person>
-            <Person
-              name={this.state.persons[2].name}
-              age={this.state.persons[2].age}
-            />
-          </div> : null
-        }
+        {persons}        
       </div>
     );
 
