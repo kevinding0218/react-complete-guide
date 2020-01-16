@@ -89,25 +89,13 @@ class App extends Component {
     // alternative javascript way, assign the jsx to variable we conditionally assign
     let persons = null;
 
+    // Map simples maps every element in a given array such as our persons array here into something else as a new array
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-          />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, "Jialu")}
-            changed={this.nameChangedHandler}
-          >
-            My Hobbies: Racing
-          </Person>
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-          />
+          {this.state.persons.map(person => {
+            return <Person name={person.name} age={person.age} />;
+          })}
         </div>
       );
     }
@@ -119,7 +107,7 @@ class App extends Component {
         <button style={style} onClick={() => this.togglePesonsHandler}>
           Toggle Persons
         </button>
-        {persons}        
+        {persons}
       </div>
     );
 
