@@ -12,9 +12,9 @@ class App extends Component {
   // if state changes, it'll lead React to re-render our DOM or to update the DOM
   state = {
     persons: [
-      { name: "Max", age: 28 },
-      { name: "Manu", age: 29 },
-      { name: "Stephanie", age: 26 }
+      { id: '1', name: "Max", age: 28 },
+      { id: '2', name: "Manu", age: 29 },
+      { id: '3', name: "Stephanie", age: 26 }
     ],
     otherState: "some other value",
     showPersons: false
@@ -51,12 +51,16 @@ class App extends Component {
     });
   };
 
+  // in javascript, objects and arrays are reference types, so when get persons from my state here
+  // I actually get a pointer to the origianl person's object managed by react, to the original state
   // slice - copys the full array and returns a new one which is then stored here
+  // es6 new feature for copy array using [...oldArray]
+  // You should always update state in an immutable fashion, so without mutating the original state first
+  // Create a copy, change that and then update the state with said state
   deletePersonHandler = (personIndex) => {
-    //const persons = this.state.persons.slice();
-    // es6 new feature
-    // You should always update state in an immutable fashion, so without mutating the original state first
-    // Create a copy, change that and then update the state with said state
+    // 
+    // const persons = this.state.persons.slice();
+
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
@@ -106,7 +110,7 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person click={() => this.deletePersonHandler(index)} name={person.name} age={person.age} />;
+            return <Person click={() => this.deletePersonHandler(index)} name={person.name} age={person.age} key={person.id} />;
           })}
         </div>
       );
