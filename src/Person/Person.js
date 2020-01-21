@@ -1,5 +1,6 @@
 import React from 'react';
 import './Person.css';
+import Radium from 'radium';
 
 // a component is just a function which returns some jsx, some html
 // props means the attributes on your component which is set and passed from outside, e.g: <Person name="Max" age="28" />
@@ -18,4 +19,4 @@ return (
 };
 
 // export the function as default of this file
-export default person;
+export default Radium(person);
