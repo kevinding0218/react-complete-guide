@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import './App.css';
-import Radium from 'radium';
-import Person from './Person/Person';
+import React, { Component } from "react";
+import "./App.css";
+import Radium, { StyleRoot } from "radium";
+import Person from "./Person/Person";
 
 // Stateful/smart components - either class-based with state or functional with useState
 // Having as many pure functional presentation components as possible and only use state
@@ -13,11 +13,11 @@ class App extends Component {
   // if state changes, it'll lead React to re-render our DOM or to update the DOM
   state = {
     persons: [
-      { id: '1', name: 'Max', age: 28 },
-      { id: '2', name: 'Manu', age: 29 },
-      { id: '3', name: 'Stephanie', age: 26 }
+      { id: "1", name: "Max", age: 28 },
+      { id: "2", name: "Manu", age: 29 },
+      { id: "3", name: "Stephanie", age: 26 }
     ],
-    otherState: 'some other value',
+    otherState: "some other value",
     showPersons: false
   };
 
@@ -35,8 +35,8 @@ class App extends Component {
     this.setState({
       persons: [
         { name: newName, age: 28 },
-        { name: 'Manu', age: 29 },
-        { name: 'Stephanie', age: 27 }
+        { name: "Manu", age: 29 },
+        { name: "Stephanie", age: 27 }
       ]
     });
   };
@@ -48,7 +48,7 @@ class App extends Component {
     });
 
     // javascript object is reference type, we should mutate it by using {...oldObject}
-    const person = { 
+    const person = {
       ...this.state.persons[personIndex]
     };
 
@@ -70,13 +70,13 @@ class App extends Component {
   // es6 new feature for copy array using [...oldArray]
   // You should always update state in an immutable fashion, so without mutating the original state first
   // Create a copy, change that and then update the state with said state
-  deletePersonHandler = (personIndex) => {
-    // 
+  deletePersonHandler = personIndex => {
+    //
     // const persons = this.state.persons.slice();
 
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
-    this.setState({persons: persons});
+    this.setState({ persons: persons });
   };
 
   togglePesonsHandler = () => {
@@ -87,16 +87,16 @@ class App extends Component {
   render() {
     // not a class property but a normal variable constant of this render method
     const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
+      backgroundColor: "green",
+      color: "white",
+      font: "inherit",
+      border: "1px solid blue",
+      padding: "8px",
+      cursor: "pointer",
       // usage of radium
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
+      ":hover": {
+        backgroundColor: "lightgreen",
+        color: "black"
       }
     };
 
@@ -129,42 +129,47 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person 
-              click={() => this.deletePersonHandler(index)} 
-              name={person.name} 
-              age={person.age} 
-              key={person.id}
-              changed={(event) => this.nameChangedHandler(event, person.id)} />;
+            return (
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                key={person.id}
+                changed={event => this.nameChangedHandler(event, person.id)}
+              />
+            );
           })}
         </div>
       );
 
-      style.backgroundColor = 'red';
+      style.backgroundColor = "red";
       // usage of radium
-      style[':hover'] = {
-        backgroundColor: 'lightred',
-        color:'black'
-      }
+      style[":hover"] = {
+        backgroundColor: "lightred",
+        color: "black"
+      };
     }
 
     let classes = [];
-    if(this.state.persons.length <= 2) {
-      classes.push('red');  // classes = ['red']
+    if (this.state.persons.length <= 2) {
+      classes.push("red"); // classes = ['red']
     }
 
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); // classes = ['red', 'bold']
+      classes.push("bold"); // classes = ['red', 'bold']
     }
 
     return (
-      <div className='App'>
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <button style={style} onClick={this.togglePesonsHandler}>
-          Toggle Persons
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm a React App</h1>
+          <p className={classes.join(" ")}>This is really working!</p>
+          <button style={style} onClick={this.togglePesonsHandler}>
+            Toggle Persons
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
 
     // param1: element that you want to render in the DOM, e.g: html or your own component
