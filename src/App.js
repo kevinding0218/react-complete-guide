@@ -87,11 +87,17 @@ class App extends Component {
   render() {
     // not a class property but a normal variable constant of this render method
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
-      cursor: "pointer"
+      cursor: "pointer",
+      // usage of radium
+      ":hover": {
+        backgroundColor: "lightgreen",
+        color: "black"
+      }
     };
 
     // it does look like html but it is NOT
@@ -137,6 +143,22 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = "red";
+      // usage of radium
+      style[":hover"] = {
+        backgroundColor: "lightred",
+        color: "black"
+      };
+    }
+
+    let classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push("red"); // classes = ['red']
+    }
+
+    if (this.state.persons.length <= 1) {
+      classes.push("bold"); // classes = ['red', 'bold']
     }
 
     return (
@@ -155,7 +177,7 @@ class App extends Component {
     // param3: any children element which is nested inside the param1 element
     // param4: content of param3 element
     // html render as
-    // <div>"h1" "Hi, I'm a React App!!!"
+    // <div>'h1' 'Hi, I'm a React App!!!'
     // 'h1' here is interpreted as text, not render as an element
     // return React.createElement('div', null, 'h1', 'Hi, I\'m a React App!!!');
 

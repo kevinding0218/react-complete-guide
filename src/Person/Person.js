@@ -9,6 +9,7 @@ import "./Person.css";
 // Stateless/dumb component - no internal logic or presentational components because they present something,
 // output content, only get external data and output in a structured way
 const person = props => {
+
   const rnd = Math.random();
 
   if (rnd > 0.7) {
