@@ -1,5 +1,5 @@
 import React from "react";
-import "./Person.css";
+import classes from "./Person.css";
 
 // a component is just a function which returns some jsx, some html
 // props means the attributes on your component which is set and passed from outside, e.g: <Person name="Max" age="28" />
@@ -9,7 +9,6 @@ import "./Person.css";
 // Stateless/dumb component - no internal logic or presentational components because they present something,
 // output content, only get external data and output in a structured way
 const person = props => {
-
   const rnd = Math.random();
 
   if (rnd > 0.7) {
@@ -17,7 +16,7 @@ const person = props => {
   }
 
   return (
-    <div className="Person">
+    <div className={classes.Person}>
       <p onClick={props.click}>
         I'm {props.name} and I am {props.age} years old!
       </p>
