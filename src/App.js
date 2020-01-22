@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "./App.css";
-import Radium, { StyleRoot } from "radium";
+import classes from './App.css';
 import Person from "./Person/Person";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 
 // Stateful/smart components - either class-based with state or functional with useState
 // Having as many pure functional presentation components as possible and only use state
@@ -85,21 +85,6 @@ class App extends Component {
   };
 
   render() {
-    // not a class property but a normal variable constant of this render method
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-      // usage of radium
-      ":hover": {
-        backgroundColor: "lightgreen",
-        color: "black"
-      }
-    };
-
     // it does look like html but it is NOT
     // all the 'div'/'h1' are not html element but managed or provided by the react
     // note here the className attribute was defined in JSX but will later on be translated to class in HTML
@@ -122,6 +107,7 @@ class App extends Component {
     // to show/hide a html element, use 'if' javascript statement in jsx as {}, return html element or null/(hide)
     // alternative javascript way, assign the jsx to variable we conditionally assign
     let persons = null;
+    let btnClass = '';
 
     // Map simples maps every element in a given array such as our persons array here into something else as a new array
     // Map has second parameter as index
@@ -130,46 +116,39 @@ class App extends Component {
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                click={() => this.deletePersonHandler(index)}
-                name={person.name}
-                age={person.age}
-                key={person.id}
-                changed={event => this.nameChangedHandler(event, person.id)}
-              />
+              <ErrorBoundary key={person.id}>
+                <Person
+                  click={() => this.deletePersonHandler(index)}
+                  name={person.name}
+                  age={person.age}
+                  changed={event => this.nameChangedHandler(event, person.id)}
+                />
+              </ErrorBoundary>
             );
           })}
         </div>
       );
 
-      style.backgroundColor = "red";
-      // usage of radium
-      style[":hover"] = {
-        backgroundColor: "lightred",
-        color: "black"
-      };
+      btnClass = classes.Red;
     }
 
-    let classes = [];
-    if (this.state.persons.length <= 2) {
-      classes.push("red"); // classes = ['red']
+    const assignedClasses = [];
+    if ( this.state.persons.length <= 2 ) {
+      assignedClasses.push( classes.red ); // classes = ['red']
     }
-
-    if (this.state.persons.length <= 1) {
-      classes.push("bold"); // classes = ['red', 'bold']
+    if ( this.state.persons.length <= 1 ) {
+      assignedClasses.push( classes.bold ); // classes = ['red', 'bold']
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(" ")}>This is really working!</p>
-          <button style={style} onClick={this.togglePesonsHandler}>
-            Toggle Persons
-          </button>
-          {persons}
-        </div>
-      </StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p className={assignedClasses.join( ' ' )}>This is really working!</p>
+        <button className={btnClass} onClick={this.togglePesonsHandler}>
+          Toggle Persons
+        </button>
+        {persons}
+      </div>
     );
 
     // param1: element that you want to render in the DOM, e.g: html or your own component
@@ -187,5 +166,4 @@ class App extends Component {
   }
 }
 
-// export default App;
-export default Radium(App);
+export default App;
